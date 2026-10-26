@@ -14,6 +14,7 @@ struct Product {
 
 struct Product inventory[MAX];
 int totalProducts = 0;
+int nextProductId = 106;
 
 /* Remove the trailing newline from a string */
 void removeNewline(char *str) {
@@ -28,26 +29,13 @@ void addProduct(void) {
     if (totalProducts >= MAX) {
         printf("\n[ERROR] Inventory is full! Cannot add more.\n");
         return;
-    }
+    }// checking if there is space in the inventory to add a new product`
 
     struct Product p;
 
+    p.id = nextProductId++;
     printf("\n--- ADD NEW PRODUCT ---\n");
-    printf("Enter Product ID: ");
-    if (scanf("%d", &p.id) != 1) {
-        printf("[ERROR] Invalid product ID.\n");
-        while (getchar() != '\n' && !feof(stdin)) {}
-        return;
-    }
-
-    for (int i = 0; i < totalProducts; i++) {
-        if (inventory[i].id == p.id) {
-            printf("[ERROR] Product ID %d already exists!\n", p.id);
-            while (getchar() != '\n' && !feof(stdin)) {}
-            return;
-        }
-    }
-
+    
     getchar();
     printf("Enter Product Name: ");
     if (fgets(p.name, sizeof(p.name), stdin) == NULL) return;
